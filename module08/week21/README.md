@@ -8,85 +8,15 @@
 - [x] Component Libraries
 
 ### React Router
-* Uses the `react-router-dom` package
-* Inside of a `Router` component, you can use `Link` components to provide clickable links to the user
-* Inside of a `Switch`, the first `Route` whose `path` attribute matches the path the user is trying to visit gets rendered
-* Outside of a `Switch`, any `Route` whose `path` matches will render
+* `<BrowserRouter>`: Main container that wraps all children involved in routing/rendering (often aliased as `Router`)
+* `<Link>`: The component responsible for updating the current url
+* `<Route>`: Url-matcher for conditionally rendering components based on the current url
+* `<Routes>`: Wrapper for the `Route`'s which will only allow one route to match
+* `<Navigate>`: Can be used to "redirect" a user
 
-```jsx
-<Router>
-  <Link to="/">Home</Link>
-  <Link to="/about">About</Link>
-  <Link to="/products">Products</Link>
-
-  <Switch>
-    <Route path="/about">
-      <About />
-    </Route>
-    { /* alternative syntax */ }
-    <Route path="/products" component={Products} />
-    { /* you can specify that a route must match specifically with the exact attribute */ }
-    <Route path="/" exact component={Home} />
-  </Switch>
-<Router>
-```
-
-### Advanced Routing
-* It is possible to nest `react-router` components
-* So that we can programmatically have access to the url the user has visited and any parameters (eg. `productId`), `react-router-dom` gives us a _custom hook_
-* `useParams` gives child components access to the parameters in the url
-
-```jsx
-// dynamic routing in parent component
-const Products = () => {
-  return (
-    <div>
-      <nav>
-        <Link to="/products/2">Product #2</Link><br/>
-        <Link to="/products/3">Product #3</Link><br/>
-        <Link to="/products/4">Product #4</Link><br/>
-        <Link to="/products/5">Product #5</Link>
-      </nav>
-
-      <Switch>
-        <Route path="/products/:productId">
-          <Product />
-        </Route>
-        <Route path="/products">
-          <h3>Please select a product above</h3>
-        </Route>
-      </Switch>
-    </div>
-  );
-};
-```
-
-```jsx
-// parameters inside child component
-const Product = () => {
-  const params = useParams();
-
-  return (
-    <div>
-      <h2>Product {params.productId}</h2>
-    </div>
-  );
-};
-```
-
-### Programmatic Routing
-* `react-router` gives us another _custom hook_ that allows us to programmatically navigate through our app
-* `useHistory` gives us an object with a method called `push` which accepts a string
-
-```js
-import {useHistory} from 'react-router-dom';
-
-// useHistory gives us back a history object
-const history = useHistory();
-
-// update the current url to '/about'
-history.push('/about');
-```
+### Custom Hooks
+* `useParams`: Allows us to access the dynamic parameters in the current url (similar to `req.params` in Express)
+* `useNavigate`: Allows us to programmatically move the user to a different endpoint
 
 ### Styled Components
 * Styled components allow us to embed our styles inside our JavaScript
